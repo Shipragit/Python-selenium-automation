@@ -26,3 +26,4 @@ resource "aws_instance" "managedNode2" {
     Name = "managedNode2"
   }
 }
+{}
