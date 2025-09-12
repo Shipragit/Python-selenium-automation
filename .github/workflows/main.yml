@@ -2,7 +2,7 @@ name: Scheduled Selenium Tests
 
 on:
   schedule:
-    # Runs every day at 9 AM UTC (adjust timing as needed)
+    # Runs every day at 9 AM UTC (adjust timing below)
     - cron: "0 9 * * *"
   workflow_dispatch:   # allows manual runs from Actions tab
 
@@ -19,9 +19,30 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Install Firefox and geckodriver (for Selenium with Firefox)
       - name: Install Firefox + GeckoDriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y firefox jq wget
-          GECKODRIVER_VERSION=$(c_
+          sudo apt-get install -y firefox jq wget tar
+          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
+          wget -q https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
+          tar -xvzf geckodriver-*.tar.gz
+          sudo mv geckodriver /usr/local/bin/
+          geckodriver --version
+          firefox --version
+
+      - name: Install dependencies (pytest + selenium + pytest-html)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest-html
+
+      - name: Run Selenium tests with pytest (Firefox)
+        run: |
+          mkdir -p reports
+          pytest -v --browser_name=Firefox --html=reports/report.html --self-contained-html
+
+      - name: Upload HTML test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-html-report
+          path: reports/report.html
