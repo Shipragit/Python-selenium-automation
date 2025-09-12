@@ -38,6 +38,7 @@ jobs:
           xvfb-run pytest -v tests/test_t1_healthcheck.py --html=reports/report.html --self-contained-html
 
       - name: Upload HTML test report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: selenium-test-report
