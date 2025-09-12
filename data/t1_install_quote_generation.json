@@ -1,0 +1,49 @@
+{
+  "quote": {
+    "subType": "New Service",
+    "subMidlevelAgentName": "NA",
+    "subMidlevelAgentID": "NA",
+    "splitPercent": "NA",
+    "salesType": "Direct Sales",
+    "salesRep": "sudhir bagi",
+    "salesAgentName": "NA",
+    "productSubtype": "Other - Testing Use Only",
+    "primeContactEmail": "sudhir.bagi@brightspeed.com",
+    "primaryContact": "NA",
+    "partnerSalesRepPhone": "NA",
+    "partnerSalesRepName": "NA",
+    "partnerSalesRepEmail": "NA",
+    "partnerAccount": "NA",
+    "opportunityType": "Brightspeed ENT",
+    "opportunityOwnerPhone": "NA",
+    "opportunityOwnerName": "sudhir bagi",
+    "opportunityOwnerEmail": "sudhir.bagi@brightspeed.com",
+    "opportunity": "Salesforce Opportunity",
+    "oppAutoNumber": "0008382",
+    "midLevelAgentName": "NA",
+    "midLeveAgentID": "NA",
+    "masterAgentName": "NA",
+    "masterAgentID": "NA",
+    "lumenSalesId": "NA",
+    "extOrderId": "006O800000aB5ajIAC",
+    "description": "Test Opp 4thSep25",
+    "customerInfo": {
+      "shipToAddress": {
+        "status": "Approved",
+        "stateOrProvince": "Georgia",
+        "postalcode": "31313",
+        "name": "JulAcc002",
+        "longitude": "NA",
+        "locality": "100 Knowledge Drive",
+        "latitude": "NA",
+        "isResidential": "false",
+        "district": "Fort Stewart",
+        "country": "US",
+        "addressType": "NA",
+        "address": "100 Knowledge Drive Fort Stewart, Georgia, 31313"
+      },
+      "customerId": "BWCQYJCYDN"
+    },
+    "channelManager": "NA"
+  }
+}
