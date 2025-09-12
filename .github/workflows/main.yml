@@ -20,14 +20,15 @@ jobs:
           python-version: "3.11"
 
       # Install Firefox and geckodriver (for Selenium with Firefox)
-      - name: Install Firefox & Geckodriver
+     - name: Install Firefox + GeckoDriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y firefox-esr
+          sudo apt-get install -y firefox
           GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
           wget -q https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
           tar -xvzf geckodriver-*.tar.gz
           sudo mv geckodriver /usr/local/bin/
+
 
       - name: Install dependencies (pytest + selenium + pytest-html)
         run: |
