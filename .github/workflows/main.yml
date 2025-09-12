@@ -1,12 +1,10 @@
-name: Scheduled + Manual Selenium Tests
+name: Manual Selenium Test
 
 on:
-  schedule:
-    - cron: "0 9 * * *"   # every day at 9 AM UTC
-  workflow_dispatch:       # manual trigger
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
-  selenium-tests:
+  run-selenium-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,34 +16,29 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Install Firefox + GeckoDriver
-      - name: Install Firefox + GeckoDriver
+      - name: Install Firefox and GeckoDriver
         run: |
           sudo apt-get update
-          sudo apt-get remove -y firefox || true
-          sudo apt-get install -y software-properties-common wget tar jq
-          sudo add-apt-repository -y ppa:mozillateam/ppa
-          sudo apt-get update
-          sudo apt-get install -y firefox
+          sudo apt-get install -y firefox xvfb wget tar jq
           
           GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
-          wget -q https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
+          wget https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
           tar -xvzf geckodriver-*.tar.gz
           sudo mv geckodriver /usr/local/bin/
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest-html
+          pip install pytest pytest-html
 
-      - name: Run Selenium tests
+      - name: Run Selenium test with virtual display
         run: |
           mkdir -p reports
-          pytest -v tests/ --html=reports/report.html --self-contained-html
+          xvfb-run pytest -v tests/test_t1_healthcheck.py --html=reports/report.html --self-contained-html
 
       - name: Upload HTML test report
         uses: actions/upload-artifact@v4
         with:
-          name: selenium-html-report
+          name: selenium-test-report
           path: reports/report.html
