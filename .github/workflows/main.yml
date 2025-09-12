@@ -43,3 +43,25 @@ jobs:
         with:
           name: selenium-test-report
           path: reports/report.html
+
+      - name: Send email with test report
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: shiva291291@gmail.com
+          password: rxnl ghow vjtv qstd
+          subject: Selenium Test Report
+          to: Sudhir.Bagi@infinite.com, Shivakumara.Appaji@infinite.com
+          from: shiva291291@gmail.com
+          secure: true
+          body: |
+            Hello Team,
+
+            The Selenium test has completed. Please find the attached HTML report.
+
+            Regards,  
+            Shivakumara
+          attachments: reports/report.html
+
