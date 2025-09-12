@@ -19,21 +19,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Install Firefox (apt) + GeckoDriver
-      - name: Install Firefox + GeckoDriver
+      # Install Firefox (non-Snap) + GeckoDriver
+      - name: Install Firefox (non-Snap) + GeckoDriver
         run: |
           sudo apt-get update
-          # Remove snap Firefox if it exists (causes Selenium issues)
-          sudo snap remove firefox || true
-          # Install Firefox from apt
-          sudo apt-get install -y firefox wget jq tar
-          # Install GeckoDriver
+          sudo apt-get remove -y firefox || true
+          sudo apt-get install -y firefox-esr wget tar jq
           GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
           wget -q https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
           tar -xvzf geckodriver-*.tar.gz
           sudo mv geckodriver /usr/local/bin/
-          geckodriver --version
-          firefox --version
 
       - name: Install dependencies (pytest + selenium + pytest-html)
         run: |
