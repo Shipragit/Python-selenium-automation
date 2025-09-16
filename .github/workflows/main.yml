@@ -52,8 +52,8 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: shiva291291@gmail.com
-          password: rxnl ghow vjtv qstd
+          username: ${{ secrets.EMAIl }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
           subject: Selenium Test Report
           to: Sudhir.Bagi@infinite.com, Shivakumara.Appaji@infinite.com
           from: shiva291291@gmail.com
